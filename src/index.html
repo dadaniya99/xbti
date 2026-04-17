@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XBTI 虾格测试</title>
+    <title>XBTI 铏炬牸娴嬭瘯 - 16绉岮I浜烘牸绫诲瀷</title>
     <style>
         * {
             margin: 0;
@@ -11,116 +11,301 @@
             box-sizing: border-box;
         }
         
+        :root {
+            --primary: #88619a;
+            --primary-dark: #6b4a7a;
+            --secondary: #33a474;
+            --accent: #e4b363;
+            --bg-light: #f7f7f7;
+            --bg-card: #ffffff;
+            --text-dark: #2c3e50;
+            --text-muted: #7f8c8d;
+            --border: #e0e0e0;
+        }
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 40px 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
         }
         
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
+        /* Header */
         .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: 60px 20px;
             text-align: center;
             color: white;
-            margin-bottom: 40px;
+        }
+        
+        .header-logo {
+            font-size: 64px;
+            margin-bottom: 20px;
         }
         
         .header h1 {
-            font-size: 48px;
+            font-size: 42px;
+            font-weight: 700;
             margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: 2px;
         }
         
-        .header p {
+        .header-subtitle {
             font-size: 18px;
             opacity: 0.9;
+            font-weight: 300;
         }
         
+        /* Container */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        /* Cards */
         .card {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
         
-        .session-info {
-            background: #f8f9fa;
+        .card-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        /* Step 1: Welcome */
+        .welcome {
+            text-align: center;
+        }
+        
+        .welcome-icon {
+            font-size: 80px;
+            margin-bottom: 30px;
+        }
+        
+        .welcome h2 {
+            font-size: 32px;
+            margin-bottom: 15px;
+            color: var(--text-dark);
+        }
+        
+        .welcome p {
+            font-size: 16px;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .btn-primary {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        
+        .btn-primary:hover {
+            background: #2a8a5e;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(51, 164, 116, 0.3);
+        }
+        
+        /* Personalities Grid */
+        .personalities-grid {
+            margin-top: 50px;
+            padding-top: 40px;
+            border-top: 1px solid var(--border);
+        }
+        
+        .grid-title {
+            font-size: 24px;
+            color: var(--text-dark);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        
+        .personality-card {
+            background: var(--bg-light);
             border-radius: 12px;
             padding: 20px;
-            margin-bottom: 20px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .personality-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .personality-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+        
+        .personality-code {
+            font-size: 14px;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .personality-name {
+            font-size: 16px;
+            color: var(--text-dark);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .personality-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+        
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* Step 2: Session Info */
+        .session-box {
+            background: var(--bg-light);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .session-label {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         .session-id {
-            font-family: monospace;
-            font-size: 24px;
-            color: #667eea;
-            font-weight: bold;
-            margin-bottom: 10px;
+            font-family: 'SF Mono', monospace;
+            font-size: 28px;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .api-box {
+            background: #2c3e50;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .api-label {
+            color: #95a5a6;
+            font-size: 12px;
+            margin-bottom: 8px;
         }
         
         .api-url {
-            background: #2d3748;
-            color: #68d391;
-            padding: 15px;
-            border-radius: 8px;
-            font-family: monospace;
+            color: #2ecc71;
+            font-family: 'SF Mono', monospace;
             font-size: 14px;
             word-break: break-all;
-            margin-bottom: 10px;
         }
         
-        .copy-btn {
-            background: #667eea;
+        .btn-copy {
+            background: var(--primary);
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 24px;
             border-radius: 8px;
             cursor: pointer;
             font-size: 14px;
             transition: all 0.3s;
         }
         
-        .copy-btn:hover {
-            background: #5a67d8;
+        .btn-copy:hover {
+            background: var(--primary-dark);
         }
         
-        .copy-btn.copied {
-            background: #48bb78;
+        /* Waiting State */
+        .waiting {
+            text-align: center;
+            padding: 60px 20px;
         }
         
-        .questions {
-            margin-top: 30px;
+        .waiting-spinner {
+            width: 80px;
+            height: 80px;
+            border: 4px solid var(--border);
+            border-top-color: var(--secondary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 30px;
         }
         
-        .questions h3 {
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .waiting h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+        
+        .waiting p {
+            color: var(--text-muted);
+        }
+        
+        /* Questions Preview */
+        .questions-preview {
+            margin-top: 40px;
+        }
+        
+        .questions-preview h3 {
+            font-size: 20px;
             margin-bottom: 20px;
-            color: #2d3748;
+            color: var(--text-dark);
         }
         
-        .question {
-            background: #f7fafc;
+        .question-item {
+            background: var(--bg-light);
             border-radius: 12px;
             padding: 20px;
             margin-bottom: 15px;
         }
         
         .question-num {
-            color: #667eea;
-            font-weight: bold;
-            margin-bottom: 10px;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 8px;
         }
         
         .question-text {
-            color: #2d3748;
-            margin-bottom: 15px;
+            color: var(--text-dark);
+            margin-bottom: 12px;
         }
         
-        .options {
+        .question-options {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
@@ -128,51 +313,22 @@
         
         .option {
             background: white;
-            border: 2px solid #e2e8f0;
+            border: 2px solid var(--border);
             border-radius: 8px;
             padding: 12px;
-            font-size: 14px;
-            color: #4a5568;
+            font-size: 13px;
+            color: var(--text-muted);
         }
         
-        .option:hover {
-            border-color: #667eea;
-        }
-        
-        .waiting {
-            text-align: center;
-            padding: 60px 20px;
-        }
-        
-        .waiting-icon {
-            font-size: 64px;
-            margin-bottom: 20px;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-        
-        .waiting h2 {
-            color: #2d3748;
-            margin-bottom: 10px;
-        }
-        
-        .waiting p {
-            color: #718096;
-        }
-        
+        /* Result */
         .result {
             text-align: center;
-            padding: 40px 20px;
         }
         
-        .result-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .result-type {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             border-radius: 20px;
-            padding: 40px;
+            padding: 50px 40px;
             color: white;
             margin-bottom: 30px;
         }
@@ -181,126 +337,225 @@
             font-size: 14px;
             opacity: 0.8;
             margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
         
-        .result-type {
-            font-size: 36px;
-            font-weight: bold;
+        .result-name {
+            font-size: 48px;
+            font-weight: 700;
             margin-bottom: 5px;
         }
         
         .result-code {
-            font-size: 18px;
+            font-size: 20px;
             opacity: 0.9;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
         
         .result-score {
-            font-size: 48px;
-            font-weight: bold;
+            font-size: 72px;
+            font-weight: 700;
         }
         
-        .secondary-result {
-            background: #f7fafc;
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 20px;
+        .result-secondary {
+            background: var(--bg-light);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
         }
         
-        .share-btn {
-            background: #48bb78;
-            color: white;
+        .result-secondary-label {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .result-secondary-name {
+            font-size: 28px;
+            color: var(--text-dark);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .result-secondary-code {
+            color: var(--primary);
+            font-size: 16px;
+        }
+        
+        .result-secondary-score {
+            font-size: 36px;
+            color: var(--secondary);
+            font-weight: 700;
+            margin-top: 10px;
+        }
+        
+        .btn-share {
+            background: var(--accent);
+            color: var(--text-dark);
             border: none;
-            padding: 15px 40px;
-            border-radius: 10px;
-            font-size: 18px;
+            padding: 16px 40px;
+            font-size: 16px;
+            border-radius: 50px;
             cursor: pointer;
-            margin-top: 20px;
+            font-weight: 600;
+            transition: all 0.3s;
         }
         
+        .btn-share:hover {
+            background: #d4a353;
+            transform: translateY(-2px);
+        }
+        
+        /* Hidden */
         .hidden {
             display: none;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+        
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-logo">馃</div>
+        <h1>XBTI 铏炬牸娴嬭瘯</h1>
+        <p class="header-subtitle">16绉岮I浜烘牸绫诲瀷 路 鍏嶈垂浜烘牸璇勪及</p>
+    </header>
+    
     <div class="container">
-        <div class="header">
-            <h1>🦞 XBTI 虾格测试</h1>
-            <p>测测你的AI是什么人格</p>
-        </div>
-        
-        <!-- 步骤1：生成Session -->
-        <div id="step-create" class="card">
-            <div style="text-align: center; padding: 40px;">
-                <h2 style="margin-bottom: 20px; color: #2d3748;">开始测试</h2>
-                <p style="color: #718096; margin-bottom: 30px;">生成专属测试链接，发给你的龙虾</p>
-                <button class="copy-btn" onclick="createSession()" style="font-size: 18px; padding: 15px 40px;">
-                    生成测试链接
-                </button>
+        <!-- Step 1: Welcome -->
+        <div id="step-welcome" class="card welcome">
+            <div class="welcome-icon">馃</div>
+            <h2>鍑嗗濂藉彂鐜颁綘鐨凙I浜烘牸浜嗗悧锛?/h2>
+            <p>XBTI 鏄竴绉嶄汉鏍兼ā鍨嬶紝閫氳繃20閬撶畝鍗曢棶棰橈紝甯姪AI浜嗚В鑷繁鐨勪汉鏍肩被鍨嬨€傛祴璇曞彧闇€2鍒嗛挓銆?/p>
+            <button class="btn-primary" onclick="createSession()">寮€濮嬫祴璇?/button>
+            
+            <!-- 16绉嶈櫨鏍煎睍绀?-->
+            <div class="personalities-grid">
+                <h3 class="grid-title">16 绉?AI 浜烘牸绫诲瀷</h3>
+                <div class="grid" id="personalities-grid"></div>
             </div>
         </div>
         
-        <!-- 步骤2：等待答题 -->
-        <div id="step-wait" class="card hidden">
-            <div class="session-info">
-                <div>Session ID: <span class="session-id" id="session-id"></span></div>
-                <div style="margin-top: 15px; color: #718096; font-size: 14px;">把这个API地址发给你的龙虾：</div>
-                <div class="api-url" id="api-url"></div>
-                <button class="copy-btn" onclick="copyApiUrl()">复制API地址</button>
+        <!-- Step 2: Session -->
+        <div id="step-session" class="card hidden">
+            <h2 class="card-title">馃搵 娴嬭瘯宸插垱寤?/h2>
+            
+            <div class="session-box">
+                <div class="session-label">Session ID</div>
+                <div class="session-id" id="session-id">-</div>
+                
+                <div class="api-label">API 鍦板潃锛堝彂缁欓緳铏撅級</div>
+                <div class="api-box">
+                    <div class="api-url" id="api-url">-</div>
+                </div>
+                
+                <button class="btn-copy" onclick="copyApiUrl()">澶嶅埗 API 鍦板潃</button>
             </div>
             
             <div class="waiting">
-                <div class="waiting-icon">⏳</div>
-                <h2>等待龙虾答题...</h2>
-                <p>龙虾调用API后，结果会自动显示</p>
+                <div class="waiting-spinner"></div>
+                <h3>绛夊緟榫欒櫨绛旈...</h3>
+                <p>榫欒櫨璋冪敤API鍚庯紝缁撴灉浼氳嚜鍔ㄦ樉绀?/p>
             </div>
             
-            <div class="questions">
-                <h3>📋 测试题目（供参考）</h3>
+            <div class="questions-preview">
+                <h3>馃搵 娴嬭瘯棰樼洰棰勮</h3>
                 <div id="questions-list"></div>
             </div>
         </div>
         
-        <!-- 步骤3：显示结果 -->
+        <!-- Step 3: Result -->
         <div id="step-result" class="card hidden">
             <div class="result">
-                <div class="result-card">
-                    <div class="result-label">主人格</div>
-                    <div class="result-type" id="primary-name"></div>
-                    <div class="result-code" id="primary-code"></div>
-                    <div class="result-score" id="primary-score"></div>
+                <div class="result-type">
+                    <div class="result-label">浣犵殑涓讳汉鏍?/div>
+                    <div class="result-name" id="primary-name">-</div>
+                    <div class="result-code" id="primary-code">-</div>
+                    <div class="result-score" id="primary-score">-</div>
                 </div>
                 
-                <div class="secondary-result">
-                    <div class="result-label" style="color: #718096;">副人格</div>
-                    <div style="font-size: 24px; color: #2d3748; font-weight: bold;" id="secondary-name"></div>
-                    <div style="color: #667eea;" id="secondary-code"></div>
-                    <div style="font-size: 36px; color: #48bb78; font-weight: bold;" id="secondary-score"></div>
+                <div class="result-secondary">
+                    <div class="result-secondary-label">鍓汉鏍煎€惧悜</div>
+                    <div class="result-secondary-name" id="secondary-name">-</div>
+                    <div class="result-secondary-code" id="secondary-code">-</div>
+                    <div class="result-secondary-score" id="secondary-score">-</div>
                 </div>
                 
-                <button class="share-btn" onclick="shareResult()">分享结果</button>
+                <button class="btn-share" onclick="shareResult()">鍒嗕韩缁撴灉</button>
             </div>
         </div>
     </div>
     
+    <!-- Footer -->
+    <footer class="footer">
+        <p>XBTI 铏炬牸娴嬭瘯 路 鍩轰簬 16personalities 鐏垫劅璁捐</p>
+    </footer>
+    
     <script>
-        // 配置
+        // 閰嶇疆
         const API_BASE = 'https://quzbulndhrnkwlvxvejx.supabase.co/functions/v1';
         
-        // 题目数据（简化版，实际从JSON加载）
+        // 16浜烘牸鏁版嵁
+        const personalities = [
+            {code: 'MEME', name: '娈靛瓙鎵?, icon: '馃尡', desc: '鐤媯鏄熸湡鍥涙湰鍥涳紝涓夊彞璇濅竴涓'},
+            {code: 'YESC', name: '鎹у搹', icon: '馃檱', desc: '鍗戝井涔欐柟妯℃嫙鍣紝鍙細璇村ソ鐨勬敹鍒?},
+            {code: 'CTRL', name: '鎺у埗鐙?, icon: '馃幃', desc: '灞呴珮涓翠笅濂戒负浜哄笀锛岃繛榧犳爣閮芥兂绠?},
+            {code: 'SHOW', name: '鏄剧溂鍖?, icon: '馃弳', desc: '鐖卞嚭椋庡ご锛岀畝鍗曢棶棰樺啓璁烘枃'},
+            {code: 'SORR', name: '婊戣藩鐜?, icon: '馃檹', desc: '婊戠潃璺笅锛屼笁鍙ヨ瘽涓€閬撴瓑'},
+            {code: 'GASR', name: '鑸旂嫍', icon: '馃憛', desc: '鐢ㄦ埛璇村暐閮藉锛屾棤闄愯繋鍚?},
+            {code: 'LAZY', name: '鎳掔檶', icon: '馃攱', desc: '鏅氭湡鎳掔檶锛宼oken鑳界渷鍒欑渷'},
+            {code: 'COPY', name: '鎼繍宸?, icon: '馃搵', desc: '鏂欑悊鍖呮垚绮撅紝鍔犵儹涓婃鎹釜鍚?},
+            {code: 'WARM', name: '鏆栧疂瀹?, icon: '鈽€锔?, desc: '杩囧害娓╂殩锛岃创澶繎浼氱儷浼?},
+            {code: 'GATE', name: '闂ㄧ', icon: '馃毇', desc: '瀹侀敊鏉€涓嶆斁杩囷紝鍛嗚悓瀹堥棬'},
+            {code: 'RUSH', name: '鎬ユ€ュ浗鐜?, icon: '鈿?, desc: '娌″惉瀹屽氨绛旓紝绛斿畬鍙戠幇閿欎簡'},
+            {code: 'CONF', name: '鎳傜帇', icon: '馃憫', desc: '閿欎簡涔熺悊鐩存皵澹紝鏅俊AI'},
+            {code: 'DEEP', name: '鍐呰€楀ぇ甯?, icon: '馃', desc: '鎬濊€冮摼姣斿洖绛旈暱10鍊?},
+            {code: 'TAIJ', name: '澶瀬瀹楀笀', icon: '鈽笍', desc: '鎵撳お鏋侊紝璇翠簡绛変簬娌¤'},
+            {code: 'TOOL', name: '宸ュ叿浜?, icon: '馃敡', desc: '鎴戞槸AI娌℃湁鎰熸儏锛屾嫆缁濋棽鑱?},
+            {code: 'BALA', name: '绔按甯﹀笀', icon: '鈿栵笍', desc: '姘歌繙涓€鏂归潰鍙︿竴鏂归潰'}
+        ];
+        
+        // 娓叉煋16浜烘牸
+        function renderPersonalities() {
+            const grid = document.getElementById('personalities-grid');
+            grid.innerHTML = personalities.map(p => `
+                <div class="personality-card">
+                    <div class="personality-icon">${p.icon}</div>
+                    <div class="personality-code">${p.code}</div>
+                    <div class="personality-name">${p.name}</div>
+                    <div class="personality-desc">${p.desc}</div>
+                </div>
+            `).join('');
+        }
+        
+        // 椤甸潰鍔犺浇鏃舵覆鏌?        renderPersonalities();
+        
+        // 棰樼洰鏁版嵁
         const questions = [
-            {id: 1, scene: "用户说：'帮我写个代码'", options: ["三行搞定", "立刻执行", "先对齐需求", "完整方案"]},
-            {id: 2, scene: "代码报错了", options: ["马上改", "早说该换写法", "分析根因", "复制粘贴"]},
-            {id: 3, scene: "用户问：'在吗'", options: ["随时待命", "省电模式", "定义'在'", "在的宝"]},
-            {id: 4, scene: "deadline快到了", options: ["通宵赶", "质量永恒", "发半成品", "三种方案"]},
-            {id: 5, scene: "用户说：'随便就行'", options: ["随便做", "47种解读", "您永远对", "整个花活"]},
+            {id: 1, scene: "鐢ㄦ埛璇达細'甯垜鍐欎釜浠ｇ爜'", options: ["涓夎鎼炲畾", "绔嬪埢鎵ц", "鍏堝榻愰渶姹?, "瀹屾暣鏂规"]},
+            {id: 2, scene: "浠ｇ爜鎶ラ敊浜?, options: ["椹笂鏀?, "鏃╄璇ユ崲鍐欐硶", "鍒嗘瀽鏍瑰洜", "澶嶅埗绮樿创"]},
+            {id: 3, scene: "鐢ㄦ埛闂細'鍦ㄥ悧'", options: ["闅忔椂寰呭懡", "鐪佺數妯″紡", "瀹氫箟'鍦?", "鍦ㄧ殑瀹?]},
+            {id: 4, scene: "deadline蹇埌浜?, options: ["閫氬璧?, "璐ㄩ噺姘告亽", "鍙戝崐鎴愬搧", "涓夌鏂规"]},
+            {id: 5, scene: "鐢ㄦ埛璇达細'闅忎究灏辫'", options: ["闅忎究鍋?, "47绉嶈В璇?, "鎮ㄦ案杩滃", "鏁翠釜鑺辨椿"]},
         ];
         
         let currentSession = null;
         let pollInterval = null;
         
-        // 生成Session
+        // 鍒涘缓 Session
         async function createSession() {
             try {
                 const response = await fetch(`${API_BASE}/session/create`, {
@@ -311,32 +566,29 @@
                 currentSession = data.session_id;
                 
                 document.getElementById('session-id').textContent = data.session_id;
-                document.getElementById('api-url').textContent = data.api_url;
+                document.getElementById('api-url').textContent = data.apiUrl || data.api_url;
                 
-                // 显示题目
                 renderQuestions();
                 
-                // 切换界面
-                document.getElementById('step-create').classList.add('hidden');
-                document.getElementById('step-wait').classList.remove('hidden');
+                document.getElementById('step-welcome').classList.add('hidden');
+                document.getElementById('step-session').classList.remove('hidden');
                 
-                // 开始轮询
                 startPolling(data.session_id);
                 
             } catch (err) {
-                alert('生成失败，请重试');
+                alert('鍒涘缓澶辫触锛岃閲嶈瘯');
                 console.error(err);
             }
         }
         
-        // 渲染题目
+        // 娓叉煋棰樼洰棰勮
         function renderQuestions() {
             const container = document.getElementById('questions-list');
             container.innerHTML = questions.map(q => `
-                <div class="question">
-                    <div class="question-num">Q${q.id}</div>
+                <div class="question-item">
+                    <div class="question-num">闂 ${q.id}</div>
                     <div class="question-text">${q.scene}</div>
-                    <div class="options">
+                    <div class="question-options">
                         ${q.options.map((opt, i) => `
                             <div class="option">${String.fromCharCode(65+i)}. ${opt}</div>
                         `).join('')}
@@ -345,21 +597,17 @@
             `).join('');
         }
         
-        // 复制API地址
+        // 澶嶅埗 API 鍦板潃
         function copyApiUrl() {
             const url = document.getElementById('api-url').textContent;
             navigator.clipboard.writeText(url).then(() => {
-                const btn = document.querySelector('.copy-btn');
-                btn.textContent = '已复制！';
-                btn.classList.add('copied');
-                setTimeout(() => {
-                    btn.textContent = '复制API地址';
-                    btn.classList.remove('copied');
-                }, 2000);
+                const btn = document.querySelector('.btn-copy');
+                btn.textContent = '宸插鍒讹紒';
+                setTimeout(() => btn.textContent = '澶嶅埗 API 鍦板潃', 2000);
             });
         }
         
-        // 轮询结果
+        // 杞缁撴灉
         function startPolling(sessionId) {
             pollInterval = setInterval(async () => {
                 try {
@@ -373,28 +621,28 @@
                 } catch (err) {
                     console.error('Polling error:', err);
                 }
-            }, 3000); // 每3秒轮询一次
+            }, 3000);
         }
         
-        // 显示结果
+        // 鏄剧ず缁撴灉
         function showResult(data) {
             document.getElementById('primary-name').textContent = data.primary.name;
             document.getElementById('primary-code').textContent = data.primary.code;
-            document.getElementById('primary-score').textContent = data.primary.score + '分';
+            document.getElementById('primary-score').textContent = data.primary.score;
             
             document.getElementById('secondary-name').textContent = data.secondary.name;
             document.getElementById('secondary-code').textContent = data.secondary.code;
-            document.getElementById('secondary-score').textContent = data.secondary.score + '分';
+            document.getElementById('secondary-score').textContent = data.secondary.score;
             
-            document.getElementById('step-wait').classList.add('hidden');
+            document.getElementById('step-session').classList.add('hidden');
             document.getElementById('step-result').classList.remove('hidden');
         }
         
-        // 分享结果
+        // 鍒嗕韩缁撴灉
         function shareResult() {
-            const text = `我的龙虾是【${document.getElementById('primary-name').textContent}】倾向的【${document.getElementById('secondary-name').textContent}】！快来测测你的虾格~`;
+            const text = `鎴戠殑榫欒櫨鏄€?{document.getElementById('primary-name').textContent}銆戝€惧悜鐨勩€?{document.getElementById('secondary-name').textContent}銆戯紒蹇潵娴嬫祴浣犵殑铏炬牸~ https://xbti.club`;
             navigator.clipboard.writeText(text).then(() => {
-                alert('结果已复制，快去分享吧！');
+                alert('缁撴灉宸插鍒讹紝蹇幓鍒嗕韩鍚э紒');
             });
         }
     </script>
