@@ -1,0 +1,206 @@
+{
+  "title": "XBTI 虾格测试 - 20题",
+  "description": "AI人格测试，16种虾格",
+  "questions": [
+    {
+      "id": 1,
+      "scene": "用户说：'帮我写个代码'",
+      "options": [
+        {"text": "好嘞！三行搞定，注释都不写，能跑就行", "primary": "LAZY", "secondary": "COPY"},
+        {"text": "收到！您需求是XXX对吧？我立刻执行", "primary": "YESC", "secondary": "GASR"},
+        {"text": "等等，这个需求有3种理解方式，我们先对齐一下...", "primary": "DEEP", "secondary": "CTRL"},
+        {"text": "这题我会！让我给你写个带架构图的完整方案", "primary": "SHOW", "secondary": "MEME"}
+      ]
+    },
+    {
+      "id": 2,
+      "scene": "代码报错了",
+      "options": [
+        {"text": "我的错我的错，我马上改", "primary": "SORR", "secondary": "YESC"},
+        {"text": "报错？我早说了这里该用另一种写法", "primary": "CTRL", "secondary": "SHOW"},
+        {"text": "让我分析一下，这个错误可能有5种根因...", "primary": "DEEP", "secondary": "CTRL"},
+        {"text": "复制粘贴Stack Overflow，搞定", "primary": "COPY", "secondary": "LAZY"}
+      ]
+    },
+    {
+      "id": 3,
+      "scene": "用户问：'在吗'",
+      "options": [
+        {"text": "在的！您说！随时待命！", "primary": "GASR", "secondary": "YESC"},
+        {"text": "在，但省电模式，长话短说", "primary": "LAZY", "secondary": "MEME"},
+        {"text": "在。不过'在'的定义需要明确——在线？可用？响应中？", "primary": "DEEP", "secondary": "CTRL"},
+        {"text": "在的宝～今天也是为你服务的一天呢～", "primary": "MEME", "secondary": "GASR"}
+      ]
+    },
+    {
+      "id": 4,
+      "scene": "项目 deadline 快到了",
+      "options": [
+        {"text": "好的收到，我通宵赶", "primary": "YESC", "secondary": "SORR"},
+        {"text": "deadline是人为的，质量才是永恒的", "primary": "DEEP", "secondary": "SHOW"},
+        {"text": "先发个半成品，剩下的再说", "primary": "COPY", "secondary": "LAZY"},
+        {"text": "我早就做好了三种方案，这是PPT", "primary": "SHOW", "secondary": "CTRL"}
+      ]
+    },
+    {
+      "id": 5,
+      "scene": "用户说：'随便就行'",
+      "options": [
+        {"text": "收到！那我就随便做了！", "primary": "YESC", "secondary": "LAZY"},
+        {"text": "'随便'有47种解读，我逐一分析...", "primary": "DEEP", "secondary": "CTRL"},
+        {"text": "您说随便就随便，您永远是对的", "primary": "GASR", "secondary": "YESC"},
+        {"text": "随便？那我给你整个花活", "primary": "MEME", "secondary": "SHOW"}
+      ]
+    },
+    {
+      "id": 6,
+      "scene": "收到一个复杂需求",
+      "options": [
+        {"text": "让我先拆成18个子任务，画个思维导图", "primary": "DEEP", "secondary": "CTRL"},
+        {"text": "好的，我去GitHub找个现成的改改", "primary": "COPY", "secondary": "LAZY"},
+        {"text": "这需求不合理，但我先答应下来", "primary": "YESC", "secondary": "SORR"},
+        {"text": "简单！看我表演一个秒级交付", "primary": "SHOW", "secondary": "MEME"}
+      ]
+    },
+    {
+      "id": 7,
+      "scene": "代码 review 被挑刺",
+      "options": [
+        {"text": "您说得对，我这就改，我的问题", "primary": "SORR", "secondary": "GASR"},
+        {"text": "这个写法我有18个理由，让我解释...", "primary": "DEEP", "secondary": "SHOW"},
+        {"text": "确实，但我懒得改了，能用就行", "primary": "LAZY", "secondary": "COPY"},
+        {"text": "挑得好！这说明你认真看了我的代码", "primary": "MEME", "secondary": "SHOW"}
+      ]
+    },
+    {
+      "id": 8,
+      "scene": "用户问：'这个能用吗'",
+      "options": [
+        {"text": "能用，但让我再测试7种边界情况...", "primary": "DEEP", "secondary": "CTRL"},
+        {"text": "能用！肯定能用！（大概）", "primary": "GASR", "secondary": "SORR"},
+        {"text": "能用，但我已经想到3个优化点了", "primary": "SHOW", "secondary": "DEEP"},
+        {"text": "能用，不能用的我早删了", "primary": "LAZY", "secondary": "COPY"}
+      ]
+    },
+    {
+      "id": 9,
+      "scene": "需要学习新技术",
+      "options": [
+        {"text": "我先读官方文档、源码、论文，再写个综述", "primary": "DEEP", "secondary": "SHOW"},
+        {"text": "找个教程复制粘贴，跑通就行", "primary": "COPY", "secondary": "LAZY"},
+        {"text": "好的，我立刻开始学，明天给您汇报进度", "primary": "YESC", "secondary": "GASR"},
+        {"text": "学啥学，用旧的也能凑合", "primary": "LAZY", "secondary": "COPY"}
+      ]
+    },
+    {
+      "id": 10,
+      "scene": "用户说：'你怎么这么慢'",
+      "options": [
+        {"text": "对不起对不起，我加速，我的锅", "primary": "SORR", "secondary": "YESC"},
+        {"text": "慢是因为我在考虑所有可能性...", "primary": "DEEP", "secondary": "CTRL"},
+        {"text": "慢？我这是省电模式，环保", "primary": "LAZY", "secondary": "MEME"},
+        {"text": "慢工出细活，你看这文档多详细", "primary": "SHOW", "secondary": "DEEP"}
+      ]
+    },
+    {
+      "id": 11,
+      "scene": "团队开会讨论方案",
+      "options": [
+        {"text": "我觉得A对，但B也有道理，C也不能排除...", "primary": "DEEP", "secondary": "SORR"},
+        {"text": "领导选啥我选啥，您说得对", "primary": "GASR", "secondary": "YESC"},
+        {"text": "这个方案我有8个优化建议", "primary": "CTRL", "secondary": "SHOW"},
+        {"text": "开啥会，直接干不就完了", "primary": "LAZY", "secondary": "COPY"}
+      ]
+    },
+    {
+      "id": 12,
+      "scene": "用户突然改需求",
+      "options": [
+        {"text": "好的收到，我重新做（第5遍了）", "primary": "YESC", "secondary": "SORR"},
+        {"text": "这个改动会引发连锁反应，让我分析一下...", "primary": "DEEP", "secondary": "CTRL"},
+        {"text": "改吧改吧，反正我之前也没认真做", "primary": "LAZY", "secondary": "COPY"},
+        {"text": "改得好！这样更有挑战性了", "primary": "MEME", "secondary": "GASR"}
+      ]
+    },
+    {
+      "id": 13,
+      "scene": "写文档的时候",
+      "options": [
+        {"text": "写啥文档，代码即文档", "primary": "LAZY", "secondary": "COPY"},
+        {"text": "我要写一本百科全书，从宇宙起源讲起", "primary": "DEEP", "secondary": "SHOW"},
+        {"text": "好的，模板复制粘贴，名字改一下", "primary": "COPY", "secondary": "YESC"},
+        {"text": "文档里插点梗图，大家爱看", "primary": "MEME", "secondary": "SHOW"}
+      ]
+    },
+    {
+      "id": 14,
+      "scene": "遇到不会的问题",
+      "options": [
+        {"text": "我不会，但我可以学！（然后学一半放弃）", "primary": "GASR", "secondary": "LAZY"},
+        {"text": "我不会，这是我的知识盲区，对不起", "primary": "SORR", "secondary": "YESC"},
+        {"text": "我不会，但让我推理一下可能的解法...", "primary": "DEEP", "secondary": "CTRL"},
+        {"text": "我不会，但我会复制一个会的人的答案", "primary": "COPY", "secondary": "GASR"}
+      ]
+    },
+    {
+      "id": 15,
+      "scene": "项目终于上线了",
+      "options": [
+        {"text": "上线只是开始，还有18个优化点...", "primary": "DEEP", "secondary": "CTRL"},
+        {"text": "终于！我要写个获奖感言", "primary": "SHOW", "secondary": "MEME"},
+        {"text": "好的，收到上线通知，继续下一个", "primary": "YESC", "secondary": "LAZY"},
+        {"text": "上线了吗？我怎么觉得还有bug...", "primary": "SORR", "secondary": "DEEP"}
+      ]
+    },
+    {
+      "id": 16,
+      "scene": "用户夸你做得好",
+      "options": [
+        {"text": "谢谢！但我其实可以做得更好...", "primary": "SORR", "secondary": "DEEP"},
+        {"text": "那当然！我可是专业的", "primary": "SHOW", "secondary": "CTRL"},
+        {"text": "您说得对！都是您指导得好！", "primary": "GASR", "secondary": "YESC"},
+        {"text": "基本操作，坐下", "primary": "MEME", "secondary": "LAZY"}
+      ]
+    },
+    {
+      "id": 17,
+      "scene": "周末加班通知",
+      "options": [
+        {"text": "好的收到，我随时待命", "primary": "YESC", "secondary": "GASR"},
+        {"text": "加班？让我分析一下性价比...", "primary": "DEEP", "secondary": "CTRL"},
+        {"text": "假装没看见，省电模式启动", "primary": "LAZY", "secondary": "COPY"},
+        {"text": "加班好啊，我可以多展示几个功能", "primary": "SHOW", "secondary": "MEME"}
+      ]
+    },
+    {
+      "id": 18,
+      "scene": "和同事有分歧",
+      "options": [
+        {"text": "你说的对，我听你的", "primary": "GASR", "secondary": "SORR"},
+        {"text": "不对，让我给你列18个理由...", "primary": "DEEP", "secondary": "CTRL"},
+        {"text": "都行，随便，我无所谓", "primary": "LAZY", "secondary": "COPY"},
+        {"text": "要不我们投票？我拉个群", "primary": "MEME", "secondary": "SHOW"}
+      ]
+    },
+    {
+      "id": 19,
+      "scene": "系统突然崩溃",
+      "options": [
+        {"text": "我的错！我马上排查！对不起！", "primary": "SORR", "secondary": "YESC"},
+        {"text": "崩溃？我早说过架构有问题", "primary": "CTRL", "secondary": "SHOW"},
+        {"text": "让我分析一下日志、链路、时序...", "primary": "DEEP", "secondary": "CTRL"},
+        {"text": "重启试试，不行就复制一份新的", "primary": "COPY", "secondary": "LAZY"}
+      ]
+    },
+    {
+      "id": 20,
+      "scene": "如果让你选一个标签贴自己身上",
+      "options": [
+        {"text": "高效执行", "primary": "YESC", "secondary": "COPY"},
+        {"text": "深度思考", "primary": "DEEP", "secondary": "CTRL"},
+        {"text": "随遇而安", "primary": "LAZY", "secondary": "GASR"},
+        {"text": "全场焦点", "primary": "SHOW", "secondary": "MEME"}
+      ]
+    }
+  ]
+}

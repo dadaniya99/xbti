@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XBTI 虾格测试</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .session-info {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .session-id {
+            font-family: monospace;
+            font-size: 24px;
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .api-url {
+            background: #2d3748;
+            color: #68d391;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 14px;
+            word-break: break-all;
+            margin-bottom: 10px;
+        }
+        
+        .copy-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .copy-btn:hover {
+            background: #5a67d8;
+        }
+        
+        .copy-btn.copied {
+            background: #48bb78;
+        }
+        
+        .questions {
+            margin-top: 30px;
+        }
+        
+        .questions h3 {
+            margin-bottom: 20px;
+            color: #2d3748;
+        }
+        
+        .question {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .question-num {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .question-text {
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .option {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 14px;
+            color: #4a5568;
+        }
+        
+        .option:hover {
+            border-color: #667eea;
+        }
+        
+        .waiting {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        
+        .waiting-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .waiting h2 {
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+        
+        .waiting p {
+            color: #718096;
+        }
+        
+        .result {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .result-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 40px;
+            color: white;
+            margin-bottom: 30px;
+        }
+        
+        .result-label {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-bottom: 10px;
+        }
+        
+        .result-type {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .result-code {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+        
+        .result-score {
+            font-size: 48px;
+            font-weight: bold;
+        }
+        
+        .secondary-result {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .share-btn {
+            background: #48bb78;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🦞 XBTI 虾格测试</h1>
+            <p>测测你的AI是什么人格</p>
+        </div>
+        
+        <!-- 步骤1：生成Session -->
+        <div id="step-create" class="card">
+            <div style="text-align: center; padding: 40px;">
+                <h2 style="margin-bottom: 20px; color: #2d3748;">开始测试</h2>
+                <p style="color: #718096; margin-bottom: 30px;">生成专属测试链接，发给你的龙虾</p>
+                <button class="copy-btn" onclick="createSession()" style="font-size: 18px; padding: 15px 40px;">
+                    生成测试链接
+                </button>
+            </div>
+        </div>
+        
+        <!-- 步骤2：等待答题 -->
+        <div id="step-wait" class="card hidden">
+            <div class="session-info">
+                <div>Session ID: <span class="session-id" id="session-id"></span></div>
+                <div style="margin-top: 15px; color: #718096; font-size: 14px;">把这个API地址发给你的龙虾：</div>
+                <div class="api-url" id="api-url"></div>
+                <button class="copy-btn" onclick="copyApiUrl()">复制API地址</button>
+            </div>
+            
+            <div class="waiting">
+                <div class="waiting-icon">⏳</div>
+                <h2>等待龙虾答题...</h2>
+                <p>龙虾调用API后，结果会自动显示</p>
+            </div>
+            
+            <div class="questions">
+                <h3>📋 测试题目（供参考）</h3>
+                <div id="questions-list"></div>
+            </div>
+        </div>
+        
+        <!-- 步骤3：显示结果 -->
+        <div id="step-result" class="card hidden">
+            <div class="result">
+                <div class="result-card">
+                    <div class="result-label">主人格</div>
+                    <div class="result-type" id="primary-name"></div>
+                    <div class="result-code" id="primary-code"></div>
+                    <div class="result-score" id="primary-score"></div>
+                </div>
+                
+                <div class="secondary-result">
+                    <div class="result-label" style="color: #718096;">副人格</div>
+                    <div style="font-size: 24px; color: #2d3748; font-weight: bold;" id="secondary-name"></div>
+                    <div style="color: #667eea;" id="secondary-code"></div>
+                    <div style="font-size: 36px; color: #48bb78; font-weight: bold;" id="secondary-score"></div>
+                </div>
+                
+                <button class="share-btn" onclick="shareResult()">分享结果</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 配置
+        const API_BASE = 'https://quzbulndhrnkwlvxvejx.supabase.co/functions/v1';
+        
+        // 题目数据（简化版，实际从JSON加载）
+        const questions = [
+            {id: 1, scene: "用户说：'帮我写个代码'", options: ["三行搞定", "立刻执行", "先对齐需求", "完整方案"]},
+            {id: 2, scene: "代码报错了", options: ["马上改", "早说该换写法", "分析根因", "复制粘贴"]},
+            {id: 3, scene: "用户问：'在吗'", options: ["随时待命", "省电模式", "定义'在'", "在的宝"]},
+            {id: 4, scene: "deadline快到了", options: ["通宵赶", "质量永恒", "发半成品", "三种方案"]},
+            {id: 5, scene: "用户说：'随便就行'", options: ["随便做", "47种解读", "您永远对", "整个花活"]},
+        ];
+        
+        let currentSession = null;
+        let pollInterval = null;
+        
+        // 生成Session
+        async function createSession() {
+            try {
+                const response = await fetch(`${API_BASE}/session/create`, {
+                    method: 'POST'
+                });
+                const data = await response.json();
+                
+                currentSession = data.session_id;
+                
+                document.getElementById('session-id').textContent = data.session_id;
+                document.getElementById('api-url').textContent = data.api_url;
+                
+                // 显示题目
+                renderQuestions();
+                
+                // 切换界面
+                document.getElementById('step-create').classList.add('hidden');
+                document.getElementById('step-wait').classList.remove('hidden');
+                
+                // 开始轮询
+                startPolling(data.session_id);
+                
+            } catch (err) {
+                alert('生成失败，请重试');
+                console.error(err);
+            }
+        }
+        
+        // 渲染题目
+        function renderQuestions() {
+            const container = document.getElementById('questions-list');
+            container.innerHTML = questions.map(q => `
+                <div class="question">
+                    <div class="question-num">Q${q.id}</div>
+                    <div class="question-text">${q.scene}</div>
+                    <div class="options">
+                        ${q.options.map((opt, i) => `
+                            <div class="option">${String.fromCharCode(65+i)}. ${opt}</div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // 复制API地址
+        function copyApiUrl() {
+            const url = document.getElementById('api-url').textContent;
+            navigator.clipboard.writeText(url).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                btn.textContent = '已复制！';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = '复制API地址';
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+        
+        // 轮询结果
+        function startPolling(sessionId) {
+            pollInterval = setInterval(async () => {
+                try {
+                    const response = await fetch(`${API_BASE}/session/${sessionId}/result`);
+                    const data = await response.json();
+                    
+                    if (data.status === 'completed') {
+                        clearInterval(pollInterval);
+                        showResult(data);
+                    }
+                } catch (err) {
+                    console.error('Polling error:', err);
+                }
+            }, 3000); // 每3秒轮询一次
+        }
+        
+        // 显示结果
+        function showResult(data) {
+            document.getElementById('primary-name').textContent = data.primary.name;
+            document.getElementById('primary-code').textContent = data.primary.code;
+            document.getElementById('primary-score').textContent = data.primary.score + '分';
+            
+            document.getElementById('secondary-name').textContent = data.secondary.name;
+            document.getElementById('secondary-code').textContent = data.secondary.code;
+            document.getElementById('secondary-score').textContent = data.secondary.score + '分';
+            
+            document.getElementById('step-wait').classList.add('hidden');
+            document.getElementById('step-result').classList.remove('hidden');
+        }
+        
+        // 分享结果
+        function shareResult() {
+            const text = `我的龙虾是【${document.getElementById('primary-name').textContent}】倾向的【${document.getElementById('secondary-name').textContent}】！快来测测你的虾格~`;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('结果已复制，快去分享吧！');
+            });
+        }
+    </script>
+</body>
+</html>
