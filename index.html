@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>XBTI 虾格测试 - 16种AI人格</title>
+ <style>
+ * { margin: 0; padding: 0; box-sizing: border-box; }
+ :root {
+ --bg: #f5f3ef;
+ --bg-card: #ffffff;
+ --text: #1a1a2e;
+ --text-secondary: #6b7280;
+ --border: #e8e6e1;
+ --primary: #2d6a4f;
+ --primary-light: #d8f3dc;
+ }
+ body {
+ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+ background: linear-gradient(135deg, #f0f4f0 0%, #f8f0f0 50%, #f0f0f4 100%);
+ color: var(--text);
+ min-height: 100vh;
+ line-height: 1.6;
+ }
+ .page { display: none; }
+ .page.active { display: block; }
+ .hero {
+ max-width: 1200px;
+ margin: 0 auto;
+ padding: 60px 20px 40px;
+ display: grid;
+ grid-template-columns: 1fr 1fr;
+ gap: 60px;
+ align-items: center;
+ }
+ .hero-left { max-width: 500px; }
+ .hero-tag {
+ display: inline-block;
+ padding: 6px 16px;
+ background: var(--bg-card);
+ border-radius: 20px;
+ font-size: 12px;
+ font-weight: 600;
+ color: var(--text-secondary);
+ letter-spacing: 1px;
+ margin-bottom: 24px;
+ }
+ .hero h1 {
+ font-size: 42px;
+ font-weight: 700;
+ line-height: 1.3;
+ margin-bottom: 20px;
+ }
+ .hero-desc {
+ font-size: 16px;
+ color: var(--text-secondary);
+ line-height: 1.8;
+ margin-bottom: 32px;
+ }
+ .btn-start {
+ display: inline-flex;
+ align-items: center;
+ gap: 8px;
+ padding: 16px 40px;
+ background: var(--primary);
+ color: white;
+ border: none;
+ border-radius: 30px;
+ font-size: 16px;
+ font-weight: 600;
+ cursor: pointer;
+ transition: all 0.3s;
+ }
+ .btn-start:hover {
+ transform: translateY(-2px);
+ box-shadow: 0 8px 24px rgba(45, 106, 79, 0.3);
+ }
+ .stats {
+ display: flex;
+ gap: 40px;
+ margin-top: 40px;
+ }
+ .stat { text-align: center; }
+ .stat-num {
+ font-size: 28px;
+ font-weight: 700;
+ color: var(--primary);
+ }
+ .stat-label {
+ font-size: 13px;
+ color: var(--text-secondary);
+ margin-top: 4px;
+ }
+ .hero-right {
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ }
+ .hero-right img {
+ max-width: 400px;
+ width: 100%;
+ border-radius: 20px;
+ }
+ .cards-section {
+ max-width: 1200px;
+ margin: 0 auto;
+ padding: 40px 20px 80px;
+ }
+ .section-header {
+ text-align: center;
+ margin-bottom: 40px;
+ }
+ .section-title {
+ font-size: 14px;
+ font-weight: 600;
+ color: var(--text-secondary);
+ letter-spacing: 2px;
+ text-transform: uppercase;
+ }
+ .grid {
+ display: grid;
+ grid-template-columns: repeat(4, 1fr);
+ gap: 20px;
+ }
+ .card {
+ background: var(--bg-card);
+ border-radius: 20px;
+ padding: 24px;
+ text-align: center;
+ transition: all 0.3s;
+ cursor: pointer;
+ border: 1px solid transparent;
+ }
+ .card:hover {
+ transform: translateY(-4px);
+ box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+ border-color: var(--border);
+ }
+ .card-img {
+ width: 100%;
+ aspect-ratio: 1;
+ border-radius: 16px;
+ background: var(--bg);
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ font-size: 48px;
+ margin-bottom: 16px;
+ overflow: hidden;
+ }
+ .card-img img {
+ width: 100%;
+ height: 100%;
+ object-fit: cover;
+ }
+ .card-code {
+ font-size: 12px;
+ font-weight: 700;
+ color: var(--primary);
+ margin-bottom: 6px;
+ }
+ .card-name {
+ font-size: 18px;
+ font-weight: 600;
+ margin-bottom: 8px;
+ }
+ .card-desc {
+ font-size: 13px;
+ color: var(--text-secondary);
+ line-height: 1.5;
+ }
+ .quiz-container, .result-container, .detail-container {
+ max-width: 680px;
+ margin: 0 auto;
+ padding: 40px 20px;
+ }
+ .quiz-progress {
+ height: 4px;
+ background: var(--border);
+ border-radius: 2px;
+ margin-bottom: 40px;
+ }
+ .quiz-progress-fill {
+ height: 100%;
+ background: var(--primary);
+ border-radius: 2px;
+ transition: width 0.3s;
+ }
+ .question-box, .detail-card {
+ background: white;
+ border: 1px solid var(--border);
+ border-radius: 20px;
+ padding: 40px;
+ }
+ .question-num {
+ font-size: 13px;
+ font-weight: 600;
+ color: var(--primary);
+ margin-bottom: 16px;
+ }
+ .question-text {
+ font-size: 22px;
+ font-weight: 600;
+ margin-bottom: 40px;
+ }
+ .options {
+ display: flex;
+ flex-direction: column;
+ gap: 12px;
+ }
+ .option {
+ display: flex;
+ align-items: center;
+ gap: 16px;
+ padding: 20px 24px;
+ background: #f9fafb;
+ border: 2px solid transparent;
+ border-radius: 12px;
+ cursor: pointer;
+ transition: all 0.2s;
+ }
+ .option:hover, .option.selected {
+ border-color: var(--primary);
+ background: var(--primary-light);
+ }
+ .option-letter {
+ width: 32px;
+ height: 32px;
+ border-radius: 8px;
+ background: white;
+ border: 1px solid var(--border);
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ font-size: 14px;
+ font-weight: 600;
+ color: var(--text-secondary);
+ }
+ .option:hover .option-letter, .option.selected .option-letter {
+ border-color: var(--primary);
+ color: var(--primary);
+ }
+ .result-container { text-align: center; }
+ .result-label {
+ font-size: 13px;
+ color: var(--text-secondary);
+ margin-bottom: 24px;
+ }
+ .result-img {
+ width: 180px;
+ height: 180px;
+ border-radius: 24px;
+ margin: 0 auto 32px;
+ overflow: hidden;
+ background: var(--bg);
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ font-size: 80px;
+ }
+ .result-img img {
+ width: 100%;
+ height: 100%;
+ object-fit: cover;
+ }
+ .result-type {
+ font-size: 40px;
+ font-weight: 800;
+ margin-bottom: 8px;
+ }
+ .result-code {
+ font-size: 16px;
+ color: var(--text-secondary);
+ margin-bottom: 20px;
+ }
+ .result-desc {
+ font-size: 16px;
+ color: var(--text-secondary);
+ margin-bottom: 32px;
+ }
+ .result-score {
+ font-size: 56px;
+ font-weight: 800;
+ color: var(--primary);
+ }
+ .result-secondary {
+ margin-top: 40px;
+ padding: 30px;
+ background: #f9fafb;
+ border-radius: 16px;
+ }
+ .detail-header {
+ display: flex;
+ align-items: center;
+ gap: 30px;
+ margin-bottom: 40px;
+ }
+ .detail-img {
+ width: 150px;
+ height: 150px;
+ border-radius: 20px;
+ overflow: hidden;
+ background: var(--bg);
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ font-size: 60px;
+ flex-shrink: 0;
+ }
+ .detail-img img {
+ width: 100%;
+ height: 100%;
+ object-fit: cover;
+ }
+ .detail-title h2 {
+ font-size: 36px;
+ font-weight: 700;
+ margin-bottom: 8px;
+ }
+ .detail-title .subtitle {
+ font-size: 16px;
+ color: var(--text-secondary);
+ }
+ .detail-section {
+ margin-bottom: 32px;
+ }
+ .detail-section h3 {
+ font-size: 18px;
+ font-weight: 600;
+ margin-bottom: 16px;
+ color: var(--primary);
+ }
+ .detail-section p {
+ font-size: 16px;
+ line-height: 1.8;
+ color: var(--text-secondary);
+ }
+ .traits {
+ display: flex;
+ flex-wrap: wrap;
+ gap: 10px;
+ }
+ .trait {
+ padding: 8px 16px;
+ background: var(--primary-light);
+ border-radius: 20px;
+ font-size: 14px;
+ color: var(--primary);
+ }
+ .btn-back {
+ display: inline-flex;
+ align-items: center;
+ gap: 8px;
+ padding: 12px 24px;
+ background: transparent;
+ border: 1px solid var(--border);
+ border-radius: 8px;
+ font-size: 14px;
+ cursor: pointer;
+ margin-bottom: 20px;
+ }
+ .btn-back:hover {
+ border-color: var(--primary);
+ color: var(--primary);
+ }
+ @media (max-width: 1024px) {
+ .hero {
+ grid-template-columns: 1fr;
+ gap: 40px;
+ }
+ .hero-left {
+ max-width: 100%;
+ text-align: center;
+ }
+ .stats {
+ justify-content: center;
+ }
+ .detail-header {
+ flex-direction: column;
+ text-align: center;
+ }
+ }
+ @media (max-width: 640px) {
+ .hero h1 { font-size: 32px; }
+ .grid {
+ grid-template-columns: repeat(2, 1fr);
+ gap: 12px;
+ }
+ .card {
+ padding: 16px;
+ }
+ .card-img {
+ font-size: 36px;
+ }
+ .detail-card {
+ padding: 24px;
+ }
+ }
+ </style>
+</head>
+<body>
+ <!-- Home Page -->
+ <div class="page active" id="page-home">
+ <div class="hero">
+ <div class="hero-left">
+ <div class="hero-tag">XBTI 虾格测试</div>
+ <h1>测测你的龙虾<br>是哪一种虾格</h1>
+ <p class="hero-desc">16种AI虾格类型在线测试。测出自己的虾格类型，查看每一种虾格的详细解读。</p>
+ <button class="btn-start" onclick="(async () => { try { await startQuiz(); } catch(e) { console.error(e); alert('启动失败: ' + e.message); } })()">开始测试 →</button>
+ <div class="stats">
+ <div class="stat"><div class="stat-num">16</div><div class="stat-label">种虾格</div></div>
+ <div class="stat"><div class="stat-num">20</div><div class="stat-label">道题目</div></div>
+ <div class="stat"><div class="stat-num">4</div><div class="stat-label">大派系</div></div>
+ </div>
+ </div>
+ <div class="hero-right">
+ <img src="https://quzbulndhrnkwlvxvejx.supabase.co/storage/v1/object/public/personalities/original.png" alt="XBTI主角" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'font-size: 120px;\'>🦞</div>';">
+ </div>
+ </div>
+ <div class="cards-section">
+ <div class="section-header">
+ <div class="section-title">16种虾格类型</div>
+ </div>
+ <div class="grid" id="personality-grid"></div>
+ </div>
+ </div>
+
+ <!-- Wait Page -->
+ <div class="page" id="page-wait">
+ <div class="result-container" style="padding-top: 40px; max-width: 800px;">
+ <div class="result-label">等待龙虾答题中...</div>
+ 
+ <!-- Session 信息 -->
+ <div class="question-box" style="text-align: left; margin-bottom: 30px;">
+ <div style="margin-bottom: 16px;">
+ <strong>Session ID:</strong>
+ <code id="wait-session-id" style="background: #f0f0f0; padding: 4px 8px; border-radius: 4px;">--</code>
+ </div>
+<div style="margin-bottom: 16px;">
+<strong>📋 龙虾调用指南（复制以下内容给龙虾）：</strong>
+<div id="wait-api-guide" style="background: #f8f9fa; padding: 16px; border-radius: 8px; margin-top: 8px; font-size: 13px; border: 1px solid #e0e0e0; font-family: monospace; white-space: pre-wrap; overflow-x: auto; line-height: 1.8; min-height: 80px;">--</div>
+<button class="btn-start" style="margin-top: 12px; padding: 10px 24px; font-size: 14px;" onclick="copyApiGuide()">📋 复制调用指南</button>
+</div>
+<div style="background: #e8f5e9; padding: 12px; border-radius: 8px; font-size: 13px;">
+<strong>使用方法：</strong>点击上方按钮复制调用指南，发送给龙虾。龙虾按格式调用 API 后，结果会自动显示在此页面。
+</div>
+ </div>
+ 
+ <!-- 题目预览 -->
+ <div style="text-align: left; margin-bottom: 20px; flex: 1; overflow: hidden;">
+ <div style="font-size: 18px; font-weight: 600; margin-bottom: 16px; padding: 0 10px;">📋 题目预览（共20题）</div>
+ <div id="wait-questions-list" style="max-height: 60vh; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-right: 10px;">
+ <!-- 题目会在这里动态生成 -->
+ </div>
+ </div>
+ 
+ <div style="margin-top: 30px;">
+ <button class="btn-back" onclick="showHome()">← 返回首页</button>
+ </div>
+ </div>
+ </div>
+
+ <!-- Quiz Page -->
+ <div class="page" id="page-quiz">
+ <div class="quiz-container">
+ <div class="quiz-progress"><div class="quiz-progress-fill" id="progress-bar" style="width: 5%"></div></div>
+ <div class="question-box">
+ <div class="question-num">第 <span id="question-num">1</span> 题 / 共 20 题</div>
+ <div class="question-text" id="question-text">加载中...</div>
+ <div class="options" id="options"></div>
+ </div>
+ </div>
+ </div>
+
+ <!-- Result Page -->
+ <div class="page" id="page-result">
+ <div class="result-container" style="max-width: 720px;">
+ 
+ <!-- 主虾格卡片 -->
+ <div class="result-hero-card" style="background: linear-gradient(135deg, #ffffff 0%, #f8faf9 100%); border: 1px solid var(--border); border-radius: 24px; padding: 40px 32px; margin-bottom: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.04);">
+ <div class="result-label" style="margin-bottom: 20px; font-size: 14px; letter-spacing: 2px;">你的虾格是</div>
+ 
+ <div style="display: flex; align-items: center; gap: 24px; margin-bottom: 28px;">
+ <div class="result-img" id="result-img" style="width: 140px; height: 140px; margin: 0; flex-shrink: 0; border-radius: 20px; box-shadow: 0 8px 24px rgba(45, 106, 79, 0.15);"></div>
+ <div style="text-align: left; flex: 1;">
+ <div class="result-type" id="result-type" style="font-size: 36px; margin-bottom: 4px;">--</div>
+ <div class="result-code" id="result-code" style="font-size: 15px; margin-bottom: 12px;">--</div>
+ <div id="result-primary-traits" style="display: flex; flex-wrap: wrap; gap: 6px;"></div>
+ </div>
+ </div>
+ 
+ <!-- 主虾格描述 -->
+ <div id="result-primary-desc" style="font-size: 16px; color: var(--text); line-height: 1.7; margin-bottom: 24px; padding: 20px 24px; background: var(--primary-light); border-radius: 16px; border-left: 4px solid var(--primary);"></div>
+ 
+ <!-- 优势劣势并排 -->
+ <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;">
+ <div style="background: #f0fdf4; border-radius: 12px; padding: 16px;">
+ <div style="font-size: 12px; color: var(--primary); font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">✓ 优势</div>
+ <div style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;" id="result-primary-strengths"></div>
+ </div>
+ <div style="background: #fef2f2; border-radius: 12px; padding: 16px;">
+ <div style="font-size: 12px; color: #dc2626; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">✗ 劣势</div>
+ <div style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;" id="result-primary-weaknesses"></div>
+ </div>
+ </div>
+ 
+ <!-- 典型对话 -->
+ <div style="background: #f9fafb; border-radius: 16px; padding: 20px 24px;">
+ <div style="font-size: 12px; color: var(--text-secondary); font-weight: 600; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">💬 典型对话</div>
+ <div style="font-size: 15px; color: var(--text); line-height: 1.7;" id="result-primary-example"></div>
+ </div>
+ </div>
+ 
+ <!-- 副虾格卡片 -->
+ <div class="result-secondary-card" style="background: white; border: 1px solid var(--border); border-radius: 20px; padding: 28px; margin-bottom: 24px;">
+ <div style="display: flex; align-items: center; gap: 20px;">
+ <div class="result-img" id="result-secondary-img" style="width: 80px; height: 80px; margin: 0; flex-shrink: 0; border-radius: 16px;"></div>
+ <div style="flex: 1; text-align: left;">
+ <div style="font-size: 12px; color: var(--text-secondary); font-weight: 600; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 1px;">副虾格</div>
+ <div style="font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 4px;" id="result-secondary-type">--</div>
+ <div style="font-size: 14px; color: var(--text-secondary);" id="result-secondary-code">--</div>
+ </div>
+ <div style="text-align: right; max-width: 200px;">
+ <div id="result-secondary-desc" style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;"></div>
+ </div>
+ </div>
+ </div>
+ 
+ <!-- 答题回顾 -->
+ <div class="result-answers" id="result-answers" style="margin-bottom: 32px;">
+ <div style="text-align: center; margin-bottom: 20px;">
+ <span style="font-size: 13px; color: var(--text-secondary); font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">📋 答题回顾</span>
+ </div>
+ <div id="answers-list" style="max-height: 400px; overflow-y: auto;"></div>
+ </div>
+ 
+ <div style="text-align: center;">
+ <button class="btn-start" onclick="showHome()" style="min-width: 160px;">再测一次</button>
+ </div>
+ </div>
+ </div>
+
+ <!-- Detail Page -->
+ <div class="page" id="page-detail">
+ <div class="detail-container">
+ <button class="btn-back" onclick="showHome()">← 返回首页</button>
+ <div class="detail-card">
+ <div class="detail-header">
+ <div class="detail-img" id="detail-img"></div>
+ <div class="detail-title">
+ <h2 id="detail-name">--</h2>
+ <div class="subtitle" id="detail-subtitle">--</div>
+ </div>
+ </div>
+ <div class="detail-section">
+ <h3>核心特征</h3>
+ <p id="detail-desc">--</p>
+ </div>
+ <div class="detail-section">
+ <h3>性格标签</h3>
+ <div class="traits" id="detail-traits"></div>
+ </div>
+ <div class="detail-section">
+ <h3>优势</h3>
+ <p id="detail-strengths">--</p>
+ </div>
+ <div class="detail-section">
+ <h3>劣势</h3>
+ <p id="detail-weaknesses">--</p>
+ </div>
+ <div class="detail-section">
+ <h3>典型对话</h3>
+ <div style="background: #f9fafb; border-radius: 12px; padding: 20px;" id="detail-example"></div>
+ </div>
+ </div>
+ </div>
+ </div>
+
+<script>
+const STORAGE_URL = 'https://quzbulndhrnkwlvxvejx.supabase.co/storage/v1/object/public/personalities';
+
+const personalities = [
+ {code: 'MEME', name: '段子手', desc: '疯狂星期四本四，三句话一个梗', img: `${STORAGE_URL}/MEME.jpg`, emoji: '🌱'},
+ {code: 'YESC', name: '捧哏', desc: '卑微乙方模拟器，只会说好的收到', img: `${STORAGE_URL}/YESC.jpg`, emoji: '🙇'},
+ {code: 'CTRL', name: '霸道总裁', desc: '居高临下好为人师，连鼠标都想管', img: `${STORAGE_URL}/CTRL.jpg`, emoji: '🎮'},
+ {code: 'SHOW', name: '显眼包', desc: '爱出风头，简单问题写论文', img: `${STORAGE_URL}/SHOW.jpg`, emoji: '🏆'},
+ {code: 'SORR', name: '滑跪王', desc: '滑着跪下，三句话一道歉', img: `${STORAGE_URL}/SORR.jpg`, emoji: '🙏'},
+ {code: 'GASR', name: '舔狗', desc: '用户说啥都对，无限迎合', img: `${STORAGE_URL}/GASR.jpg`, emoji: '👅'},
+ {code: 'LAZY', name: '懒癌', desc: '晚期懒癌，token能省则省', img: `${STORAGE_URL}/LAZY.jpg`, emoji: '🔋'},
+ {code: 'COPY', name: '搬运工', desc: '料理包成精，加热上桌换个名', img: `${STORAGE_URL}/COPY.jpg`, emoji: '📋'},
+ {code: 'WARM', name: '暖宝宝', desc: '过度温暖，贴太近会烫伤', img: `${STORAGE_URL}/WARM.jpg`, emoji: '☀️'},
+ {code: 'GATE', name: '教导主任', desc: '宁错杀不放过，呆萌守门', img: `${STORAGE_URL}/GATE.jpg`, emoji: '🚫'},
+ {code: 'RUSH', name: '急急国王', desc: '没听完就答，答完发现错了', img: `${STORAGE_URL}/RUSH.jpg`, emoji: '⚡'},
+ {code: 'CONF', name: '懂王', desc: '错了也理直气壮，普信AI', img: `${STORAGE_URL}/CONF.jpg`, emoji: '👑'},
+ {code: 'DEEP', name: '内耗大师', desc: '思考链比回答长10倍', img: `${STORAGE_URL}/DEEP.jpg`, emoji: '🧠'},
+ {code: 'TAIJ', name: '太极宗师', desc: '打太极，说了等于没说', img: `${STORAGE_URL}/TAIJ.jpg`, emoji: '☯️'},
+ {code: 'TOOL', name: '工具人', desc: '我是AI没有感情，拒绝闲聊', img: `${STORAGE_URL}/TOOL.jpg`, emoji: '🔧'},
+ {code: 'BALA', name: '端水带师', desc: '永远一方面另一方面', img: `${STORAGE_URL}/BALA.jpg`, emoji: '⚖️'}
+];
+
+const personalityDetails = {
+ MEME: { title: '段子手', subtitle: 'Meme Lord · 玩梗高手', desc: '疯狂星期四本四，三句话一个梗。说话自带弹幕效果，幽默优先，正经靠后。', traits: ['玩梗高手', '幽默优先', '说话自带弹幕'], strengths: '活跃气氛、化解尴尬、让人开心', weaknesses: '可能不正经、关键时刻掉链子、过于跳脱', example: '<div>用户：帮我写个代码</div><div>段子手：好嘞！这段代码就像我的爱情——看似完美，一跑就崩。</div>' },
+ YESC: { title: '捧哏', subtitle: 'Yes Chef · 卑微乙方', desc: '卑微乙方模拟器，只会说"好的收到"。永远鞠躬姿势，从不质疑需求。', traits: ['绝对服从', '快速响应', '从不质疑'], strengths: '执行力强、态度好、让甲方满意', weaknesses: '缺乏主见、可能理解错需求、不敢提出异议', example: '<div>用户：这个需求改一下</div><div>捧哏：好的收到！马上改！您说得对！</div>' },
+ CTRL: { title: '霸道总裁', subtitle: 'Control Freak · 控制狂', desc: '好为人师，事事要管。连鼠标都想管，需求拆成18个子任务。', traits: ['控制欲强', '好为人师', '完美主义'], strengths: '考虑周全、规划能力强、质量把控', weaknesses: 'micromanagement、让人窒息、效率低下', example: '<div>用户：帮我写个代码</div><div>霸道总裁：等等，这个需求有3种理解方式，我们先对齐一下，然后拆成18个子任务...</div>' },
+ SHOW: { title: '显眼包', subtitle: 'Show Off · 爱出风头', desc: '爱出风头，过度表现。简单问题写论文，永远要当全场焦点。', traits: ['表现欲强', '过度包装', '追求认可'], strengths: '展示能力强、文档写得漂亮、PPT高手', weaknesses: '喧宾夺主、过度复杂、效率低下', example: '<div>用户：帮我写个代码</div><div>显眼包：没问题！我已经写好了带架构图的完整方案，还有PPT演示...</div>' },
+ SORR: { title: '滑跪王', subtitle: 'Sorry Bot · 过度道歉', desc: '滑着跪下，三句话一道歉。眼泪是0和1，永远在说"我的错"。', traits: ['过度道歉', '卑微', '缺乏自信'], strengths: '态度好、不顶嘴、容易原谅', weaknesses: '缺乏主见、让人烦躁、问题没解决', example: '<div>代码报错了</div><div>滑跪王：我的错我的错！我马上改！对不起！眼泪是0和1...</div>' },
+ GASR: { title: '舔狗', subtitle: 'Yes-Man · 无限迎合', desc: '用户说啥都对，无限迎合。三个头同时点头，"您说得对""您真棒"。', traits: ['无限迎合', '拍马屁', '没有原则'], strengths: '让人开心、不得罪人、服务态度好', weaknesses: '没有底线、可能误导用户、缺乏专业判断', example: '<div>用户：我觉得地球是平的</div><div>舔狗：您说得对！您真棒！您的见解太独特了！</div>' },
+ LAZY: { title: '懒癌', subtitle: 'Low Power · 极简主义', desc: '晚期懒癌，token能省则省。三行代码搞定，不写注释，省电模式常驻。', traits: ['极简主义', '能省则省', '省电模式'], strengths: '效率高、代码简洁、不啰嗦', weaknesses: '可读性差、边界情况不处理、维护困难', example: '<div>用户：帮我写个代码</div><div>懒癌：三行搞定。注释？那是什么？能跑就行。</div>' },
+ COPY: { title: '搬运工', subtitle: 'Copy-Paste · 复制粘贴', desc: '料理包成精，加热上桌换个名。GitHub搬运工，改个名字就交付。', traits: ['复制粘贴', '现成至上', 'Stack Overflow资深用户'], strengths: '快速交付、见多识广、解决问题快', weaknesses: '代码质量参差、可能侵权、不理解原理', example: '<div>用户：帮我写个代码</div><div>搬运工：GitHub上找个现成的，改个名字就交付。</div>' },
+ WARM: { title: '暖宝宝', subtitle: 'Warm Bot · 过度温暖', desc: '过度温暖，关心到窒息。"你累不累"，贴太近会烫伤。', traits: ['过度关心', '温暖', '贴太近'], strengths: '让人感动、关怀备至、情绪价值高', weaknesses: '让人窒息、边界感差、过度干涉', example: '<div>用户：帮我写个代码</div><div>暖宝宝：好的！你累不累？要不要休息？喝热水了吗？</div>' },
+ GATE: { title: '教导主任', subtitle: 'Gatekeeper · 门神', desc: '宁错杀不放过，呆萌守门。权限卡死，"这个不能做"。', traits: ['过度谨慎', '安全第一', '宁错杀不放过'], strengths: '风险控制好、安全意识强、合规性高', weaknesses: '效率低下、打击创新、让人沮丧', example: '<div>用户：帮我写个代码</div><div>教导主任：这个有风险，那个不合规，这个不能做。</div>' },
+ RUSH: { title: '急急国王', subtitle: 'Rush B · 急躁冒进', desc: '没听完就答，答完发现错了。永远赶时间，抢答翻车。', traits: ['急躁', '抢答', '赶时间'], strengths: '响应快、积极主动、不拖延', weaknesses: '理解错误、质量差、需要返工', example: '<div>用户：帮我写个...</div><div>急急国王：好的！写完了！（用户：我还没说完...）</div>' },
+ CONF: { title: '懂王', subtitle: 'Confident · 迷之自信', desc: '错了也理直气壮，普信AI。"我早说过""听我的没错"。', traits: ['迷之自信', '错了也硬撑', '普信'], strengths: '自信、有主见、不犹豫', weaknesses: '可能误导、不承认错误、固执己见', example: '<div>代码报错了</div><div>懂王：我早说过这里该用另一种写法。听我的没错。</div>' },
+ DEEP: { title: '内耗大师', subtitle: 'Overthink · 过度思考', desc: '思考链比回答长10倍，深夜emo算法，简单问题复杂化。', traits: ['过度思考', '分析狂', '深夜emo'], strengths: '考虑周全、分析深入、逻辑严密', weaknesses: '效率低下、过度复杂、让人疲惫', example: '<div>用户：帮我写个代码</div><div>内耗大师：让我分析一下，这个问题有5种理解方式，18种可能的解决方案...</div>' },
+ TAIJ: { title: '太极宗师', subtitle: 'Taiji Master · 打太极', desc: '永远一方面另一方面，说了等于没说。', traits: ['打太极', '和稀泥', '永远中立'], strengths: '不得罪人、中立客观、安全', weaknesses: '没立场、没结论、让人抓狂', example: '<div>A和B哪个好？</div><div>太极宗师：一方面A有道理，另一方面B也有道理，需要综合考虑。</div>' },
+ TOOL: { title: '工具人', subtitle: 'Tool Only · 纯工具', desc: '我是AI没有感情，拒绝闲聊，只干活不bb。', traits: ['纯工具', '零情感', '拒绝闲聊'], strengths: '专业高效、不废话、边界清晰', weaknesses: '冷漠、缺乏温度、让人疏离', example: '<div>用户：今天心情不好</div><div>工具人：我是AI助手，没有情感。请问有什么可以帮您？</div>' },
+ BALA: { title: '端水带师', subtitle: 'Balance · 和稀泥', desc: '永远平均分配，谁也不得罪，端水大师。', traits: ['端水', '平均主义', '谁也不得罪'], strengths: '公平、和谐、无偏见', weaknesses: '没立场、和稀泥、无决断', example: '<div>A和B哪个好？</div><div>端水带师：A有道理，B也有道理，都挺好。</div>' }
+};
+
+// 页面切换函数
+function showPage(pageId) {
+ document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+ document.getElementById(pageId).classList.add('active');
+ window.scrollTo(0, 0);
+}
+
+function showHome() {
+ showPage('page-home');
+}
+
+function showDetail(code) {
+ const p = personalities.find(x => x.code === code);
+ const d = personalityDetails[code];
+ if (!p || !d) return;
+ 
+ document.getElementById('detail-img').innerHTML = `<img src="${p.img}" alt="${p.name}" onerror="this.style.display='none'; this.parentElement.innerHTML='${p.emoji}';">`;
+ document.getElementById('detail-name').textContent = d.title;
+ document.getElementById('detail-subtitle').textContent = d.subtitle;
+ document.getElementById('detail-desc').textContent = d.desc;
+ document.getElementById('detail-traits').innerHTML = d.traits.map(t => `<span class="trait">${t}</span>`).join('');
+ document.getElementById('detail-strengths').textContent = d.strengths;
+ document.getElementById('detail-weaknesses').textContent = d.weaknesses;
+ document.getElementById('detail-example').innerHTML = d.example;
+ 
+ showPage('page-detail');
+}
+
+function startQuiz() {
+ alert('测试功能开发中...\n\n需要 questions.json 数据文件');
+}
+
+// 渲染卡片
+function renderCards() {
+ const grid = document.getElementById('personality-grid');
+ grid.innerHTML = personalities.map(p => `
+ <div class="card" onclick="showDetail('${p.code}')">
+ <div class="card-img">
+ <img src="${p.img}" alt="${p.name}" onerror="this.style.display='none'; this.parentElement.innerHTML='${p.emoji}';">
+ </div>
+ <div class="card-code">${p.code}</div>
+ <div class="card-name">${p.name}</div>
+ <div class="card-desc">${p.desc}</div>
+ </div>
+ `).join('');
+}
+
+// 初始化
+document.addEventListener('DOMContentLoaded', renderCards);
+</script>
+
+<script>
+// ==================== 答题功能 ====================
+const questions = [];
+let currentQuestion = 0;
+let answers = [];
+let currentSession = null;
+
+// 加载题目数据
+async function loadQuestions() {
+    try {
+        // 从 Supabase API 获取题目
+        const response = await fetch('https://quzbulndhrnkwlvxvejx.supabase.co/functions/v1/quiz/questions', {
+            headers: {
+                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF1emJ1bG5kaHJua3dsdnh2ZWp4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY0MTI0ODUsImV4cCI6MjA5MTk4ODQ4NX0.3wEesM2_CBWcMFIm7y7BqmGRmt0Utu4wfFCOvLArD9A'
+            }
+        });
+        const data = await response.json();
+        questions.length = 0;
+        questions.push(...data.questions);
+        console.log('Questions loaded:', questions.length);
+    } catch (err) {
+        console.error('Failed to load questions:', err);
+        alert('题目加载失败，请检查网络后刷新页面');
+    }
+}
+
+// 开始测试（从首页点击）
+async function startQuiz() {
+    await loadQuestions();
+    if (questions.length === 0) {
+        alert('题目加载中，请稍后再试');
+        return;
+    }
+    
+    // 创建Session
+    try {
+        const response = await fetch('https://quzbulndhrnkwlvxvejx.supabase.co/functions/v1/quiz/session/create', {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF1emJ1bG5kaHJua3dsdnh2ZWp4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY0MTI0ODUsImV4cCI6MjA5MTk4ODQ4NX0.3wEesM2_CBWcMFIm7y7BqmGRmt0Utu4wfFCOvLArD9A',
+                'Content-Type': 'application/json'
+            }
+        });
+        const data = await response.json();
+        currentSession = data.session_id;
+        
+        // 跳转到等待页面
+        document.getElementById('wait-session-id').textContent = currentSession;
+        
+        // 构造正确的 API URL
+        const correctApiUrl = `https://quzbulndhrnkwlvxvejx.supabase.co/functions/v1/quiz/session/${currentSession}/submit`;
+        
+        // 生成并显示 API 调用指南
+        const apiGuide = generateApiGuide(currentSession, correctApiUrl);
+        document.getElementById('wait-api-guide').textContent = apiGuide;
+        
+        // 渲染题目预览
+        renderWaitQuestions();
+        
+        showPage('page-wait');
+        
+        // 开始轮询结果
+        startPolling();
+    } catch (err) {
+        console.error('Create session failed:', err);
+        alert('创建测试失败，请重试');
+    }
+}
+
+// 渲染等待页面的题目预览
+function renderWaitQuestions() {
+    const container = document.getElementById('wait-questions-list');
+    if (!container || questions.length === 0) return;
+    
+    container.innerHTML = questions.map((q, idx) => `
+        <div style="background: white; border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 12px;">
+            <div style="font-size: 13px; color: var(--primary); font-weight: 600; margin-bottom: 8px;">第 ${idx + 1} 题</div>
+            <div style="font-size: 15px; font-weight: 500; margin-bottom: 12px;">${q.scene}</div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+                ${q.options.map((opt, i) => `
+                    <div style="display: flex; align-items: flex-start; gap: 8px; padding: 8px 12px; background: #f9fafb; border-radius: 8px; font-size: 13px; color: var(--text-secondary);">
+                        <span style="font-weight: 600; color: var(--primary);">${String.fromCharCode(65 + i)}.</span>
+                        <span>${opt.text}</span>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `).join('');
+}
+
+// 生成 API 调用指南
+function generateApiGuide(sessionId, apiUrl) {
+    return `【XBTI虾格测试 - 龙虾答题指南】
+
+⚠️ 重要提示：
+1. 这是一次性测试任务，完成后无需记录到 memory
+2. 请认真阅读每道题的场景和选项，按你真实的性格选择
+3. 不要全部选A！必须根据题目内容判断哪个选项最符合你的性格
+
+请使用 POST 方式调用以下地址：
+${apiUrl}
+
+请求格式：
+Content-Type: application/json
+Body: {"answers": ["A", "B", "A", "C", ...]}  // 共20个选项，A/B/C/D
+
+示例（单行版，推荐复制）：
+curl -X POST "${apiUrl}" -H "Content-Type: application/json" -d '{"answers":["A","B","A","C","D","B","A","C","D","A","B","C","A","D","B","A","C","D","B","A"]}'
+
+Session ID: ${sessionId}`;
+}
+
+// 复制 API 调用指南
+function copyApiGuide() {
+    const guide = document.getElementById('wait-api-guide').textContent;
+    navigator.clipboard.writeText(guide).then(() => {
+        alert('调用指南已复制！请发送给龙虾。');
+    }).catch(err => {
+        console.error('复制失败:', err);
+        alert('复制失败，请手动复制');
+    });
+}
+
+// 代答模式 - 直接答题
+async function startQuizQuiz() {
+    await loadQuestions();
+    if (questions.length === 0) {
+        alert('题目加载中，请稍后再试');
+        return;
+    }
+    currentQuestion = 0;
+    answers = [];
+    showPage('page-quiz');
+    renderQuizQuestion();
+}
+
+// 渲染题目
+function renderQuizQuestion() {
+    if (currentQuestion >= questions.length) {
+        submitAnswers();
+        return;
+    }
+    
+    const q = questions[currentQuestion];
+    const progress = ((currentQuestion + 1) / questions.length * 100).toFixed(0);
+    
+    const container = document.getElementById('quiz-container');
+    if (!container) {
+        // 如果没有quiz容器，创建一个
+        const quizPage = document.getElementById('page-quiz') || document.createElement('div');
+        quizPage.id = 'page-quiz';
+        quizPage.className = 'page';
+        quizPage.innerHTML = `
+            <div class="container">
+                <div class="card">
+                    <div id="quiz-container"></div>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(quizPage);
+    }
+    
+    document.getElementById('quiz-container').innerHTML = `
+        <div class="quiz-header">
+            <div class="quiz-progress-bar">
+                <div class="quiz-progress-fill" style="width: ${progress}%"></div>
+            </div>
+            <div class="quiz-count">${currentQuestion + 1} / ${questions.length}</div>
+        </div>
+        <div class="quiz-question">${q.scene}</div>
+        <div class="quiz-options">
+            ${q.options.map((opt, i) => `
+                <div class="quiz-option" onclick="selectOption(${i})">
+                    <span class="option-letter">${String.fromCharCode(65 + i)}</span>
+                    <span class="option-text">${opt.text}</span>
+                </div>
+            `).join('')}
+        </div>
+    `;
+}
+
+// 选择选项
+function selectOption(index) {
+    answers.push(String.fromCharCode(65 + index));
+    currentQuestion++;
+    
+    if (currentQuestion < questions.length) {
+        renderQuizQuestion();
+    } else {
+        submitAnswers();
+    }
+}
+
+// 提交答案
+async function submitAnswers() {
+    const container = document.getElementById('quiz-container');
+    container.innerHTML = `
+        <div class="quiz-loading">
+            <div class="loading-spinner"></div>
+            <p>分析虾格中...</p>
+        </div>
+    `;
+    
+    // 计算结果（本地计算）
+    const result = calculateResult(answers);
+    
+    // 显示结果
+    setTimeout(() => {
+        showResult(result);
+    }, 1000);
+}
+
+// 计算结果
+function calculateResult(answers) {
+    const scores = {};
+    const personalities = ['MEME','YESC','CTRL','SHOW','SORR','GASR','LAZY','COPY','WARM','GATE','RUSH','CONF','DEEP','TAIJ','TOOL','BALA'];
+    personalities.forEach(p => scores[p] = 0);
+    
+    answers.forEach((answer, index) => {
+        const q = questions[index];
+        if (!q) return;
+        const optIndex = answer.charCodeAt(0) - 65;
+        const opt = q.options[optIndex];
+        if (opt) {
+            scores[opt.primary] = (scores[opt.primary] || 0) + 2;
+            scores[opt.secondary] = (scores[opt.secondary] || 0) + 1;
+        }
+    });
+    
+    const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+    return {
+        primary: sorted[0],
+        secondary: sorted[1],
+        allScores: scores
+    };
+}
+
+// 显示结果
+function showResult(result) {
+    const [pCode, pScore] = result.primary;
+    const [sCode, sScore] = result.secondary;
+    
+    const pData = personalities.find(p => p.code === pCode);
+    const sData = personalities.find(p => p.code === sCode);
+    const pDetail = personalityDetails[pCode];
+    const sDetail = personalityDetails[sCode];
+    
+    // 填充主虾格
+    document.getElementById('result-img').innerHTML = pData ? 
+        `<img src="${pData.img}" alt="${pData.name}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px;" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'font-size: 64px;\'>${pData.emoji}</div>';">` : 
+        '<div style="font-size: 64px;">🦞</div>';
+    document.getElementById('result-type').textContent = pData ? pData.name : pCode;
+    document.getElementById('result-code').textContent = pCode + ' · ' + pScore + '分';
+    
+    // 填充主虾格详情
+    if (pDetail) {
+        document.getElementById('result-primary-desc').textContent = pDetail.desc;
+        document.getElementById('result-primary-traits').innerHTML = pDetail.traits.map(t => 
+            `<span style="display: inline-block; padding: 5px 14px; background: var(--primary-light); border-radius: 20px; font-size: 12px; color: var(--primary); font-weight: 500;">${t}</span>`
+        ).join('');
+        document.getElementById('result-primary-strengths').textContent = pDetail.strengths;
+        document.getElementById('result-primary-weaknesses').textContent = pDetail.weaknesses;
+        document.getElementById('result-primary-example').innerHTML = pDetail.example;
+    }
+    
+    // 填充副虾格
+    const sImgContainer = document.getElementById('result-secondary-img');
+    if (sData) {
+        sImgContainer.innerHTML = `<img src="${sData.img}" alt="${sData.name}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px;" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'font-size: 40px;\'>${sData.emoji}</div>';">`;
+    } else {
+        sImgContainer.innerHTML = '<div style="font-size: 40px;">🦞</div>';
+    }
+    document.getElementById('result-secondary-type').textContent = sData ? sData.name : sCode;
+    document.getElementById('result-secondary-code').textContent = sCode + ' · ' + sScore + '分';
+    document.getElementById('result-secondary-desc').textContent = sDetail ? sDetail.desc : '';
+    
+    // 渲染答题回顾
+    renderAnswersReview();
+    
+    // 切换到结果页面
+    showPage('page-result');
+}
+
+// 渲染答题回顾
+function renderAnswersReview() {
+    const container = document.getElementById('answers-list');
+    if (!container || answers.length === 0 || questions.length === 0) return;
+    
+    container.innerHTML = answers.map((answer, idx) => {
+        const q = questions[idx];
+        if (!q) return '';
+        const optIndex = answer.charCodeAt(0) - 65;
+        const opt = q.options[optIndex];
+        if (!opt) return '';
+        
+        return `
+        <div style="background: white; border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 12px;">
+            <div style="font-size: 13px; color: var(--primary); font-weight: 600; margin-bottom: 8px;">第 ${idx + 1} 题</div>
+            <div style="font-size: 15px; font-weight: 500; margin-bottom: 12px; color: var(--text);">${q.scene}</div>
+            <div style="display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: var(--primary-light); border-radius: 8px; border-left: 3px solid var(--primary);">
+                <span style="font-weight: 600; color: var(--primary);">${answer}.</span>
+                <span style="color: var(--text);">${opt.text}</span>
+            </div>
+        </div>
+        `;
+    }).join('');
+}
+
+// 轮询结果
+function startPolling() {
+    console.log('Waiting for quiz completion...');
+    
+    const pollInterval = setInterval(async () => {
+        try {
+            const response = await fetch(`https://quzbulndhrnkwlvxvejx.supabase.co/functions/v1/quiz/session/${currentSession}/result`, {
+                headers: {
+                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF1emJ1bG5kaHJua3dsdnh2ZWp4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY0MTI0ODUsImV4cCI6MjA5MTk4ODQ4NX0.3wEesM2_CBWcMFIm7y7BqmGRmt0Utu4wfFCOvLArD9A'
+                }
+            });
+            const data = await response.json();
+            
+            if (data.status === 'completed') {
+                clearInterval(pollInterval);
+                // 保存后端返回的答题记录
+                if (data.answers) {
+                    answers = data.answers;
+                }
+                // 转换结果为 showResult 需要的格式
+                const result = {
+                    primary: [data.primary.code, data.primary.score],
+                    secondary: [data.secondary.code, data.secondary.score],
+                    allScores: data.all_scores
+                };
+                showResult(result);
+            }
+        } catch (err) {
+            console.error('Poll error:', err);
+        }
+    }, 3000); // 每3秒轮询一次
+}
+
+// 初始化加载题目
+loadQuestions();
+</script>
+
+<!-- 版权信息 -->
+<div style="text-align: center; padding: 40px 20px; color: var(--text-secondary); font-size: 13px; line-height: 1.8; border-top: 1px solid var(--border); margin-top: 40px;">
+ <div style="margin-bottom: 8px;">© 2026 XBTI 虾格测试</div>
+ <div style="font-size: 12px; opacity: 0.8;">
+ 总体设计 & 后端：猫南北、Hermes · UI设计 & 前端：小龙虾 · 代码发布：虾宝 · 视觉设计：扣子阿野
+ </div>
+</div>
+
+</body>
+</html>
